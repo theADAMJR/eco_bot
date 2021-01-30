@@ -6,7 +6,7 @@ export class CommandHandler {
   commands = new Map();
 
   async init() {
-    const path = resolve('./src/handlers/commands');
+    const path = resolve(`./src/handlers/commands`);
     const fileNames = readdirSync(path);
 
     for (const fileName of fileNames) {
@@ -21,15 +21,19 @@ export class CommandHandler {
   }
 
   async handle(prefix, msg) {
-    const name = msg.content
-      .slice(prefix.length)
-      .split(' ')[0];
-
-    const args = msg.content
-      .slice(prefix.length + name.length)
-      .split(' ');
-
-    const command = this.commands.get(name);
-    await command?.execute(msg, ...args);
+    try {
+      const name = msg.content
+        .slice(prefix.length)
+        .split(' ')[0];
+  
+      const args = msg.content
+        .split(' ')
+        .slice(1);
+  
+      const command = this.commands.get(name);
+      await command?.execute(msg, ...args);
+    } catch (error) {
+      await msg.reply(`⚠️ ${error.message}`);
+    }
   }
 }

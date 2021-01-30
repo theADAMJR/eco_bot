@@ -1,0 +1,16 @@
+:root {
+  --background-primary: #23272A;
+}
+
+body {
+  overflow-x: hidden;
+  background-color: var(--background-primary) !important;
+}
+
+.fade {
+  transition: all 1s ease-in-out;
+}
+
+.navbar img {
+  max-width: 96px;
+}
